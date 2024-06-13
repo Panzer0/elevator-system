@@ -17,4 +17,15 @@ public class Elevator {
     TreeSet<Integer> roadmap;
     TreeSet<Integer> backlog;
 
+    public Elevator(int id, Floor currentFloor) {
+        this.id = id;
+        this.currentFloor = currentFloor;
+        this.status = Status.IDLE;
+        this.shaftProgress = 0;
+        this.waiting = false;
+        this.roadmap = new TreeSet<>();
+        this.backlog = new TreeSet<>();
+    }
+
+    
 }
