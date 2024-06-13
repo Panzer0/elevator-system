@@ -9,6 +9,7 @@ public class Elevator {
         IDLE
     }
 
+    int id;
     Status status;
     Floor currentFloor;
     int shaftProgress;
