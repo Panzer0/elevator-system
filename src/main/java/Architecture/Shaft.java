@@ -7,10 +7,10 @@ public class Shaft {
 
     public Shaft(int distance, Floor floorBelow, Floor floorAbove) {
         if(distance <= 0) {
-            throw new IllegalArgumentException("Distance must be greater than 0");
+            throw new IllegalArgumentException("distance must be greater than 0");
         }
         if(floorAbove == floorBelow) {
-            throw new IllegalArgumentException("Neighbouring floors must not be the same");
+            throw new IllegalArgumentException("floorBelow and floorAbove must not be the same");
         }
         if(floorBelow.getLevel() >= floorAbove.getLevel()) {
             throw new IllegalArgumentException("floorBelow's level must be lesser than floorAbove's level");
