@@ -29,16 +29,16 @@ public class FloorLayout {
     }
 
     public void addBelow(int distance, int level) {
-        if(level <= getBottomFloor().getLevel()) {
-            throw new IllegalArgumentException("New floor's level must be above the current bottom floor's level");
+        if(level >= getBottomFloor().getLevel()) {
+            throw new IllegalArgumentException("New floor's level must be below the current bottom floor's level");
         }
 
         Floor newFloor = new Floor(level);
-        Shaft newShaft = new Shaft(distance, this.getTopFloor(), newFloor);
-        this.getTopFloor().setShaftAbove(newShaft);
-        newFloor.setShaftBelow(newShaft);
+        Shaft newShaft = new Shaft(distance, newFloor, this.getBottomFloor());
+        this.getBottomFloor().setShaftBelow(newShaft);
+        newFloor.setShaftAbove(newShaft);
 
-        this.floors.add(newFloor);
+        this.floors.add(0, newFloor);
     }
 
     public Floor getTopFloor() {
