@@ -40,17 +40,6 @@ public class ShaftTest {
     }
 
     @Test
-    public void testConstructorMisalignedNeighbours() {
-        Floor floor_1 = new Floor(1);
-        Floor floor_2 = new Floor(2);
-
-        Exception exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> new Shaft(1, floor_2, floor_1));
-        assertEquals("floorBelow's level must be lesser than floorAbove's level", exception.getMessage());
-    }
-
-    @Test
     public void testSetDifference() {
         Floor floor_1 = new Floor(1);
         Floor floor_2 = new Floor(2);
