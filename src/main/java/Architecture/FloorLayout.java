@@ -10,6 +10,11 @@ public class FloorLayout {
         this.floors.add(initialFloor);
     }
 
+    public FloorLayout(int level) {
+        this.floors = new ArrayList<>();
+        this.floors.add(new Floor(level));
+    }
+
     public void addAbove(int distance, int level) {
         if(level <= getTopFloor().getLevel()) {
             throw new IllegalArgumentException("New floor's level must be above the current top floor's level");
@@ -25,7 +30,7 @@ public class FloorLayout {
 
     public void addBelow(int distance, int level) {
         if(level <= getBottomFloor().getLevel()) {
-            throw new IllegalArgumentException("New floor's level must be above the current top floor's level");
+            throw new IllegalArgumentException("New floor's level must be above the current bottom floor's level");
         }
 
         Floor newFloor = new Floor(level);
