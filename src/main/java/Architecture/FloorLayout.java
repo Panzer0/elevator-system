@@ -10,16 +10,6 @@ public class FloorLayout {
         this.floors.add(initialFloor);
     }
 
-    public Floor getTopFloor() {
-        // Requires java 21
-        return this.floors.getLast();
-    }
-
-    public Floor getGroundFloor() {
-        // Requires java 21
-        return this.floors.getFirst();
-    }
-
     public void addAbove(int distance, int level) {
         if(level <= getTopFloor().getLevel()) {
             throw new IllegalArgumentException("New floor's level must be above the current top floor's level");
@@ -31,6 +21,29 @@ public class FloorLayout {
         newFloor.setShaftBelow(newShaft);
 
         this.floors.add(newFloor);
+    }
+
+    public void addBelow(int distance, int level) {
+        if(level <= getBottomFloor().getLevel()) {
+            throw new IllegalArgumentException("New floor's level must be above the current top floor's level");
+        }
+
+        Floor newFloor = new Floor(level);
+        Shaft newShaft = new Shaft(distance, this.getTopFloor(), newFloor);
+        this.getTopFloor().setShaftAbove(newShaft);
+        newFloor.setShaftBelow(newShaft);
+
+        this.floors.add(newFloor);
+    }
+
+    public Floor getTopFloor() {
+        // Requires java 21
+        return this.floors.getLast();
+    }
+
+    public Floor getBottomFloor() {
+        // Requires java 21
+        return this.floors.getFirst();
     }
 
     public ArrayList<Floor> getFloors() {
