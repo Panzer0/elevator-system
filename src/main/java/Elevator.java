@@ -1,4 +1,5 @@
 import Architecture.Floor;
+import Architecture.Shaft;
 
 import java.util.TreeSet;
 
@@ -27,5 +28,34 @@ public class Elevator {
         this.backlog = new TreeSet<>();
     }
 
-    
+    public float getPosition() {
+        float position = (float)this.currentFloor.getLevel();
+        switch (this.status) {
+            case UPWARD -> {
+                Shaft activeShaft = this.currentFloor.getShaftAbove();
+                if(activeShaft == null) {
+                    throw new IllegalStateException("Can't be moving upwards beyond top floor");
+                }
+
+                if(this.shaftProgress == 0) {
+                    return position;
+                }
+                return position + (float)this.shaftProgress / activeShaft.getDistance();
+            }
+            case DOWNWARD -> {
+                Shaft activeShaft = this.currentFloor.getShaftBelow();
+                if(activeShaft == null) {
+                    throw new IllegalStateException("Can't be moving downwards beyond bottom floor");
+                }
+
+                if(this.shaftProgress == 0) {
+                    return position;
+                }
+                return position - (float)this.shaftProgress / activeShaft.getDistance();
+            }
+            default -> {
+                return position;
+            }
+        }
+    }
 }
