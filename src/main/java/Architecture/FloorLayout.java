@@ -15,6 +15,11 @@ public class FloorLayout {
         return this.floors.getLast();
     }
 
+    public Floor getGroundFloor() {
+        // Requires java 21
+        return this.floors.getFirst();
+    }
+
     public void addAbove(int distance, int level) {
         if(level <= getTopFloor().getLevel()) {
             throw new IllegalArgumentException("New floor's level must be above the current top floor's level");
