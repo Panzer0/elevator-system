@@ -39,11 +39,48 @@ public class SimulationTest {
         simulation.step();
 //        #0 2 -> 3, #1 2 -> _ (waiting)
         simulation.step();
-//        #0 3 -> 3 (waiting), #1 2 -> _
+//        #0 3 -> _ (waiting), #1 2 -> _
         assertEquals(3, simulation.getElevators().get(0).getPosition());
         assertEquals(2, simulation.getElevators().get(1).getPosition());
         assertEquals(0, simulation.getElevators().get(2).getPosition());
     }
-    
+
+    @Test
+    public void testExternalCall() {
+        FloorLayout layout = new FloorLayout(0);
+        layout.addAbove(1, 9);
+        Simulation simulation = new Simulation(layout, 3);
+
+        simulation.internalCall(0, 5);
+        simulation.internalCall(1, 2);
+//        #0 0 -> 5, #1 0 -> 2
+
+        simulation.step(6);
+//        #0 1 -> 5, #1 1 -> 2
+//        #0 2 -> 5, #1 2 -> _ (waiting)
+//        #0 3 -> 5, #1 2 -> _
+//        #0 4 -> 5, #1 2 -> _
+//        #0 5 -> _ (waiting), #1 2 -> _
+//        #0 5 -> _, #1 2 -> _
+
+        assertEquals(5, simulation.getElevators().get(0).getPosition());
+        assertFalse(simulation.getElevators().get(0).isWaiting());
+
+        simulation.externalCall(8, Direction.DOWN);
+//        #0 5 -> 8, #1 2 -> _
+        simulation.step();
+        simulation.step();
+//        #0 7 -> 8, #1 2 -> _
+
+        assertEquals(7, simulation.getElevators().get(0).getPosition());
+
+        simulation.externalCall(5, Direction.UP);
+        simulation.externalCall(6, Direction.UP);
+//        #0 7 -> 8, #1 2 -> 5/6
+        simulation.step();
+//        #0 8 -> _, #1 3 -> 5/6
+        assertEquals(8, simulation.getElevators().get(0).getPosition());
+        assertEquals(3, simulation.getElevators().get(1).getPosition());
+    }
 
 }
