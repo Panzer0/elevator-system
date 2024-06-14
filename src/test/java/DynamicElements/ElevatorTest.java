@@ -21,5 +21,26 @@ public class ElevatorTest {
         assertTrue(elevator.getBacklog().isEmpty());
     }
 
+    @Test
+    public void testGeneral1() {
+        FloorLayout layout = new FloorLayout(0);
+        layout.addAbove(1);
+        layout.addAbove(1);
+
+        Elevator elevator = new Elevator(1, layout.getBottomFloor());
+
+
+        elevator.assignCall(2);
+        assertFalse(elevator.getRoadmap().isEmpty());
+
+        elevator.step();
+        elevator.step();
+        elevator.step();
+        elevator.step();
+        elevator.step();
+
+        assertTrue(elevator.getRoadmap().isEmpty());
+    }
+
 
 }
