@@ -33,6 +33,12 @@ public class Simulation {
         }
     }
 
+    public boolean suitsCall(Elevator elevator, ExternalCall call){
+        return(elevator.getPosition() == call.level()
+                || elevator.getStatus() == Status.IDLE
+                || (elevator.getStatus() == Status.UPWARD && elevator.getPosition() < call.level())
+                || (elevator.getStatus() == Status.DOWNWARD && elevator.getPosition() > call.level()));
+    }
 
     public void assignCall() {
         ;
