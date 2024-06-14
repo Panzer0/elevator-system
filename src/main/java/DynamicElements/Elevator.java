@@ -168,7 +168,7 @@ public class Elevator {
         updateStatus();
     }
 
-    private void relocate(int level) {
+    public void relocate(int level) {
         if(level < this.getCurrentFloor().getBottomFloor().getLevel()
                 || level > this.getCurrentFloor().getTopFloor().getLevel()) {
             throw new IllegalArgumentException("level must be within the bounds of existing floor levels");
