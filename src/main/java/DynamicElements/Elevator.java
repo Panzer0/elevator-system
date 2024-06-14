@@ -232,7 +232,7 @@ public class Elevator {
         return "Elevator{" +
                 "id=" + id +
                 ", status=" + status +
-                ", currentFloor=" + currentFloor +
+                ", level=" + currentFloor.getLevel() +
                 ", shaftProgress=" + shaftProgress +
                 ", waiting=" + waiting +
                 ", roadmap=" + roadmap +
