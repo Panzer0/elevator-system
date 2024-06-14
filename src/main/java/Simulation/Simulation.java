@@ -7,6 +7,7 @@ import DynamicElements.Status;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Optional;
 
 
@@ -59,20 +60,19 @@ public class Simulation {
                         Math.abs(e2.getPosition() - call.level())));
     }
 
-    private void assignCall(ExternalCall call) {
-        Optional<Elevator> closestElevator = findClosestSuitableElevator(this.elevators,call);
+    private boolean assignCall(ExternalCall call) {
+        Optional<Elevator> closestElevator = findClosestSuitableElevator(this.elevators, call);
 
-        if(closestElevator.isPresent()) {
+        if (closestElevator.isPresent()) {
             Elevator elevator = closestElevator.get();
             elevator.assignCall(call.level());
-            this.callBacklog.remove(call);
+            return true;
         }
+        return false;
     }
 
     private void assignCalls() {
-        for (ExternalCall call: callBacklog) {
-            assignCall(call);
-        }
+        callBacklog.removeIf(this::assignCall);
     }
 
     public void step() {
