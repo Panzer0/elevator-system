@@ -7,7 +7,7 @@ import DynamicElements.Status;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-
+import java.util.Optional;
 
 
 public class Simulation {
@@ -33,6 +33,18 @@ public class Simulation {
         }
     }
 
+    public FloorLayout getLayout() {
+        return layout;
+    }
+
+    public ArrayList<Elevator> getElevators() {
+        return elevators;
+    }
+
+    public HashSet<ExternalCall> getCallBacklog() {
+        return callBacklog;
+    }
+
     public boolean suitsCall(Elevator elevator, ExternalCall call){
         return(elevator.getPosition() == call.level()
                 || elevator.getStatus() == Status.IDLE
@@ -40,12 +52,27 @@ public class Simulation {
                 || (elevator.getStatus() == Status.DOWNWARD && elevator.getPosition() > call.level()));
     }
 
-    public void assignCall() {
-        ;
+    public Optional<Elevator> findClosestSuitableElevator(ArrayList<Elevator> elevators, ExternalCall call) {
+        return elevators.stream()
+                .filter(elevator -> suitsCall(elevator, call))
+                .min((e1, e2) -> Float.compare(Math.abs(e1.getPosition() - call.level()),
+                        Math.abs(e2.getPosition() - call.level())));
+    }
+
+    public void assignCall(ExternalCall call) {
+        Optional<Elevator> closestElevator = findClosestSuitableElevator(this.elevators,call);
+
+        if(closestElevator.isPresent()) {
+            Elevator elevator = closestElevator.get();
+            elevator.assignCall(call.level());
+            this.callBacklog.remove(call);
+        }
     }
 
     private void assignCalls() {
-        ;
+        for (ExternalCall call: callBacklog) {
+            assignCall(call);
+        }
     }
 
     public void step() {
