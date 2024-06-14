@@ -173,6 +173,10 @@ public class Elevator {
             this.rotateRoadmap();
         }
 
+        int closestEnd = this.getClosestEnd(this.roadmap);
+        if(closestEnd == this.currentFloor.getLevel() && this.shaftProgress == 0) {
+            return;
+        }
         this.status = this.getClosestEnd(this.roadmap) < this.currentFloor.getLevel() ? Status.DOWNWARD : Status.UPWARD;
     }
 
@@ -204,6 +208,10 @@ public class Elevator {
 
     public void step() {
         this.checkOffStop();
+        if(isWaiting()){
+            this.waiting = false;
+            return;
+        }
         this.move();
     }
 }
