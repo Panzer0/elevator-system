@@ -30,6 +30,15 @@ public class Simulation {
             Elevator newElevator = new Elevator(i, bottomFloor);
             this.elevators.add(newElevator);
         }
-
     }
+
+    private void assignCalls() {
+        ;
+    }
+
+    public void step() {
+        assignCalls();
+        this.elevators.forEach(Elevator::step);
+    }
+
 }
