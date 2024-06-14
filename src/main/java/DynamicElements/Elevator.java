@@ -117,6 +117,27 @@ public class Elevator {
         this.shaftProgress = shaftProgress;
     }
 
+    public void assignCall(int level) {
+        if(level < this.getCurrentFloor().getBottomFloor().getLevel()
+                || level > this.currentFloor.getTopFloor().getLevel()) {
+            throw new IllegalArgumentException("Level must be within bounds of existing floors");
+        }
+
+        // Already at the requested floor or headed in the right direction
+        if((level > this.getPosition() && this.status == Status.UPWARD)
+                || (level < this.getPosition() && this.status == Status.DOWNWARD)
+                || ((float)level == this.getPosition())) {
+            this.roadmap.add(level);
+        }
+        else if(this.status == Status.IDLE) {
+            this.roadmap.add(level);
+            this.updateStatus();
+        }
+        else{
+            this.backlog.add(level);
+        }
+    }
+
     private void move() {
         if(this.status == Status.IDLE) {
             return;
@@ -161,6 +182,7 @@ public class Elevator {
             this.roadmap.remove(currentLevel);
             this.waiting = true;
         }
+        updateStatus();
     }
 
     private void rotateRoadmap() {
@@ -181,7 +203,7 @@ public class Elevator {
     }
 
     public void step() {
-        updateStatus();
+        this.checkOffStop();
         this.move();
     }
 }
