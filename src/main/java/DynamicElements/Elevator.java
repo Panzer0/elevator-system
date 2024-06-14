@@ -6,11 +6,6 @@ import Architecture.Shaft;
 import java.util.TreeSet;
 
 public class Elevator {
-    enum Status {
-        UPWARD,
-        DOWNWARD,
-        IDLE
-    }
 
     private int id;
     private Status status;
@@ -93,24 +88,8 @@ public class Elevator {
         this.id = id;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public void setCurrentFloor(Floor currentFloor) {
-        this.currentFloor = currentFloor;
-    }
-
     public void setWaiting(boolean waiting) {
         this.waiting = waiting;
-    }
-
-    public void setRoadmap(TreeSet<Integer> roadmap) {
-        this.roadmap = roadmap;
-    }
-
-    public void setBacklog(TreeSet<Integer> backlog) {
-        this.backlog = backlog;
     }
 
     public void setShaftProgress(int shaftProgress) {
@@ -189,6 +168,39 @@ public class Elevator {
         updateStatus();
     }
 
+    public void relocate(int level) {
+        if(level < this.getCurrentFloor().getBottomFloor().getLevel()
+                || level > this.getCurrentFloor().getTopFloor().getLevel()) {
+            throw new IllegalArgumentException("level must be within the bounds of existing floor levels");
+        }
+        if(level == this.currentFloor.getLevel()) {
+            return;
+        }
+
+        Floor newFloor = this.currentFloor;
+        if(level > this.currentFloor.getLevel()) {
+            while (newFloor.getLevel() < level
+                    && newFloor.getShaftAbove() != null
+                    && newFloor.getShaftAbove().getFloorAbove() != null) {
+                newFloor = newFloor.getShaftAbove().getFloorAbove();
+            }
+        }
+        else{
+            while (newFloor.getLevel() > level
+                    && newFloor.getShaftBelow() != null
+                    && newFloor.getShaftBelow().getFloorBelow() != null) {
+                newFloor = newFloor.getShaftBelow().getFloorBelow();
+            }
+        }
+
+        this.currentFloor = newFloor;
+        this.roadmap.clear();
+        this.backlog.clear();
+        this.waiting = false;
+        this.status = Status.IDLE;
+        this.shaftProgress = 0;
+    }
+
     private void rotateRoadmap() {
         if(!this.roadmap.isEmpty()) {
             throw new IllegalStateException("Can't rotate roadmap with pending requests");
@@ -213,5 +225,18 @@ public class Elevator {
             return;
         }
         this.move();
+    }
+
+    @Override
+    public String toString() {
+        return "Elevator{" +
+                "id=" + id +
+                ", status=" + status +
+                ", level=" + currentFloor.getLevel() +
+                ", shaftProgress=" + shaftProgress +
+                ", waiting=" + waiting +
+                ", roadmap=" + roadmap +
+                ", backlog=" + backlog +
+                '}';
     }
 }

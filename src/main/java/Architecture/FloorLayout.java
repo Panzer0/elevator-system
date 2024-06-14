@@ -24,6 +24,12 @@ public class FloorLayout {
         this.floors.add(newFloor);
     }
 
+    public void addAbove(int distance, int count) {
+        for(int i = 0; i < count; i++) {
+            addAbove(distance);
+        }
+    }
+
     public void addBelow(int distance) {
         Floor newFloor = new Floor(getBottomFloor().getLevel() - 1);
         Shaft newShaft = new Shaft(distance, newFloor, this.getBottomFloor());
@@ -31,6 +37,12 @@ public class FloorLayout {
         newFloor.setShaftAbove(newShaft);
 
         this.floors.add(0, newFloor);
+    }
+
+    public void addBelow(int distance, int count) {
+        for(int i = 0; i < count; i++) {
+            addBelow(distance);
+        }
     }
 
     public Floor getTopFloor() {

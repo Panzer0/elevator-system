@@ -1,4 +1,3 @@
 package Simulation;
 
-public class ExternalCall {
-}
+public record ExternalCall(int level, Direction direction) { }

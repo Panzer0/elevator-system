@@ -15,7 +15,7 @@ public class ElevatorTest {
 
         assertEquals(2, elevator.getId());
         assertEquals(floor_1, elevator.getCurrentFloor());
-        assertEquals(Elevator.Status.IDLE, elevator.getStatus());
+        assertEquals(Status.IDLE, elevator.getStatus());
         assertFalse(elevator.isWaiting());
         assertTrue(elevator.getRoadmap().isEmpty());
         assertTrue(elevator.getBacklog().isEmpty());
@@ -34,26 +34,26 @@ public class ElevatorTest {
         elevator.assignCall(2);
         assertFalse(elevator.getRoadmap().isEmpty());
         assertEquals(0, elevator.getPosition());
-        assertEquals(Elevator.Status.UPWARD, elevator.getStatus());
+        assertEquals(Status.UPWARD, elevator.getStatus());
 
         // Level 1 -> 2
         elevator.step();
         assertFalse(elevator.getRoadmap().isEmpty());
         assertEquals(1, elevator.getPosition());
-        assertEquals(Elevator.Status.UPWARD, elevator.getStatus());
+        assertEquals(Status.UPWARD, elevator.getStatus());
 
         // Level 2 -> _, waiting
         elevator.step();
         assertTrue(elevator.getRoadmap().isEmpty());
         assertEquals(2, elevator.getPosition());
-        assertEquals(Elevator.Status.IDLE, elevator.getStatus());
+        assertEquals(Status.IDLE, elevator.getStatus());
         assertTrue(elevator.isWaiting());
 
         // Level 2 -> _
         elevator.step();
         assertTrue(elevator.getRoadmap().isEmpty());
         assertEquals(2, elevator.getPosition());
-        assertEquals(Elevator.Status.IDLE, elevator.getStatus());
+        assertEquals(Status.IDLE, elevator.getStatus());
         assertFalse(elevator.isWaiting());
 
         // Call 2, 0
@@ -61,21 +61,21 @@ public class ElevatorTest {
         elevator.assignCall(0);
         assertFalse(elevator.getRoadmap().isEmpty());
         assertEquals(2, elevator.getPosition());
-        assertEquals(Elevator.Status.IDLE, elevator.getStatus());
+        assertEquals(Status.IDLE, elevator.getStatus());
         assertFalse(elevator.isWaiting());
 
         // Level 2 -> 0
         elevator.step();
         assertFalse(elevator.getRoadmap().isEmpty());
         assertEquals(2, elevator.getPosition());
-        assertEquals(Elevator.Status.DOWNWARD, elevator.getStatus());
+        assertEquals(Status.DOWNWARD, elevator.getStatus());
         assertFalse(elevator.isWaiting());
 
         // Level 1 -> 0
         elevator.step();
         assertFalse(elevator.getRoadmap().isEmpty());
         assertEquals(1, elevator.getPosition());
-        assertEquals(Elevator.Status.DOWNWARD, elevator.getStatus());
+        assertEquals(Status.DOWNWARD, elevator.getStatus());
         assertFalse(elevator.isWaiting());
 
         // Call 2
@@ -88,7 +88,7 @@ public class ElevatorTest {
         assertFalse(elevator.getRoadmap().isEmpty());
         assertTrue(elevator.getBacklog().isEmpty());
         assertEquals(0, elevator.getPosition());
-        assertEquals(Elevator.Status.UPWARD, elevator.getStatus());
+        assertEquals(Status.UPWARD, elevator.getStatus());
         assertTrue(elevator.isWaiting());
     }
 
