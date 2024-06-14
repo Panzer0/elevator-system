@@ -3,6 +3,7 @@ package Simulation;
 import Architecture.Floor;
 import Architecture.FloorLayout;
 import DynamicElements.Elevator;
+import DynamicElements.Status;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,6 +33,11 @@ public class Simulation {
         }
     }
 
+
+    public void assignCall() {
+        ;
+    }
+
     private void assignCalls() {
         ;
     }
@@ -52,11 +58,5 @@ public class Simulation {
         this.elevators.get(id).assignCall(level);
     }
 
-    public void externalCall(int level, Direction direction){
-        if(level < this.layout.getBottomFloor().getLevel() || level > this.layout.getTopFloor().getLevel()) {
-            throw new IllegalArgumentException("level must match an existing floor");
-        }
 
-        this.callBacklog.add(new ExternalCall(level, direction));
-    }
 }

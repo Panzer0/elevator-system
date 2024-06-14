@@ -6,11 +6,6 @@ import Architecture.Shaft;
 import java.util.TreeSet;
 
 public class Elevator {
-    enum Status {
-        UPWARD,
-        DOWNWARD,
-        IDLE
-    }
 
     private int id;
     private Status status;
