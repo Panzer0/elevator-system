@@ -209,4 +209,17 @@ public class Elevator {
         }
         this.move();
     }
+
+    @Override
+    public String toString() {
+        return "Elevator{" +
+                "id=" + id +
+                ", status=" + status +
+                ", currentFloor=" + currentFloor +
+                ", shaftProgress=" + shaftProgress +
+                ", waiting=" + waiting +
+                ", roadmap=" + roadmap +
+                ", backlog=" + backlog +
+                '}';
+    }
 }
