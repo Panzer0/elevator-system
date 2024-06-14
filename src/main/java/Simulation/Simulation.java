@@ -45,21 +45,21 @@ public class Simulation {
         return callBacklog;
     }
 
-    public boolean suitsCall(Elevator elevator, ExternalCall call){
+    private boolean suitsCall(Elevator elevator, ExternalCall call){
         return(elevator.getPosition() == call.level()
                 || elevator.getStatus() == Status.IDLE
                 || (elevator.getStatus() == Status.UPWARD && elevator.getPosition() < call.level())
                 || (elevator.getStatus() == Status.DOWNWARD && elevator.getPosition() > call.level()));
     }
 
-    public Optional<Elevator> findClosestSuitableElevator(ArrayList<Elevator> elevators, ExternalCall call) {
+    private Optional<Elevator> findClosestSuitableElevator(ArrayList<Elevator> elevators, ExternalCall call) {
         return elevators.stream()
                 .filter(elevator -> suitsCall(elevator, call))
                 .min((e1, e2) -> Float.compare(Math.abs(e1.getPosition() - call.level()),
                         Math.abs(e2.getPosition() - call.level())));
     }
 
-    public void assignCall(ExternalCall call) {
+    private void assignCall(ExternalCall call) {
         Optional<Elevator> closestElevator = findClosestSuitableElevator(this.elevators,call);
 
         if(closestElevator.isPresent()) {
