@@ -80,6 +80,12 @@ public class Simulation {
         this.elevators.forEach(Elevator::step);
     }
 
+    public void step(int count) {
+        for(int i = 0; i < count; i++) {
+            step();
+        }
+    }
+
     public void status() {
         this.elevators.forEach(System.out::println);
     }
