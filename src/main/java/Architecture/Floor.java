@@ -13,6 +13,21 @@ public class Floor implements Comparable<Floor>{
         return level;
     }
 
+    public Floor getBottomFloor() {
+        Floor floor = this;
+        while(floor.getShaftBelow() != null && floor.getShaftBelow().getFloorBelow() != null) {
+            floor = getShaftBelow().getFloorBelow();
+        }
+        return floor;
+    }
+    public Floor getTopFloor() {
+        Floor floor = this;
+        while(floor.getShaftAbove() != null && floor.getShaftAbove().getFloorAbove() != null) {
+            floor = getShaftAbove().getFloorAbove();
+        }
+        return floor;
+    }
+
     public Shaft getShaftBelow() {
         return shaftBelow;
     }
