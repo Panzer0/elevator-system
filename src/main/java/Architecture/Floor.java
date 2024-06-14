@@ -1,6 +1,6 @@
 package Architecture;
 
-public class Floor {
+public class Floor implements Comparable<Floor>{
     private final int level;
     private Shaft shaftBelow = null;
     private Shaft shaftAbove = null;
@@ -27,5 +27,10 @@ public class Floor {
 
     public void setShaftAbove(Shaft shaftAbove) {
         this.shaftAbove = shaftAbove;
+    }
+
+    @Override
+    public int compareTo(Floor other) {
+        return Integer.compare(this.level, other.getLevel());
     }
 }
