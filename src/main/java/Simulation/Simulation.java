@@ -41,4 +41,14 @@ public class Simulation {
         this.elevators.forEach(Elevator::step);
     }
 
+    public void internalCall(int id, int level){
+        if(id < 0 || id >= this.elevators.size()) {
+            throw new IllegalArgumentException("id must match an existing elevator");
+        }
+        if(level < this.layout.getBottomFloor().getLevel() || level > this.layout.getTopFloor().getLevel()) {
+            throw new IllegalArgumentException("level must match an existing floor");
+        }
+
+        this.elevators.get(id).assignCall(level);
+    }
 }
