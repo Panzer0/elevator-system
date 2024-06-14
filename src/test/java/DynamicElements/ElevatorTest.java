@@ -92,5 +92,4 @@ public class ElevatorTest {
         assertTrue(elevator.isWaiting());
     }
 
-
 }
