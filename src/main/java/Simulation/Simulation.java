@@ -51,4 +51,12 @@ public class Simulation {
 
         this.elevators.get(id).assignCall(level);
     }
+
+    public void externalCall(int level, Direction direction){
+        if(level < this.layout.getBottomFloor().getLevel() || level > this.layout.getTopFloor().getLevel()) {
+            throw new IllegalArgumentException("level must match an existing floor");
+        }
+
+        this.callBacklog.add(new ExternalCall(level, direction));
+    }
 }
