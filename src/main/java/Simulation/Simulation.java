@@ -80,6 +80,10 @@ public class Simulation {
         this.elevators.forEach(Elevator::step);
     }
 
+    public void status() {
+        this.elevators.forEach(System.out::println);
+    }
+
     public void internalCall(int id, int level){
         if(id < 0 || id >= this.elevators.size()) {
             throw new IllegalArgumentException("id must match an existing elevator");
