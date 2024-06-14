@@ -13,9 +13,9 @@ import java.util.Optional;
 public class Simulation {
     public static final int MAX_ELEVATORS = 16;
 
-    private FloorLayout layout;
-    private ArrayList<Elevator> elevators;
-    private HashSet<ExternalCall> callBacklog;
+    private final FloorLayout layout;
+    private final ArrayList<Elevator> elevators;
+    private final HashSet<ExternalCall> callBacklog;
 
     public Simulation(FloorLayout layout, int elevatorCount) {
         if(elevatorCount <= 0 || elevatorCount > MAX_ELEVATORS) {
